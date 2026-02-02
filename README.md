@@ -19,6 +19,6 @@
 - Backend:  http://localhost:8080/health
 
 ## หมายเหตุด้านความปลอดภัย (เดโม่)
-- หน้า Register อนุญาตเลือก role ได้ (สะดวกทดสอบ) ของจริงอย่าทำแบบนี้
+- หน้า Register อนุญาตเลือก role ได้ (สะดวกทดสอบ) ไม่ recomend on product
 - Endpoint registerTask ใช้ check capacity แบบ 2-step เพื่อความอ่านง่าย
   ของจริงควรทำ update แบบ atomic + validation ที่แน่นกว่า

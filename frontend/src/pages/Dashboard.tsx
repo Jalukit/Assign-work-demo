@@ -7,7 +7,7 @@ export default function Dashboard({ user }: { user: User }) {
   const [busy, setBusy] = useState(false)
 
   // Admin create task
-  const isAdmin = user.role === 'admin'
+  
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [capacity, setCapacity] = useState(3)
@@ -61,55 +61,8 @@ export default function Dashboard({ user }: { user: User }) {
     }
   }
 
-  async function createTask() {
-    setMsg('')
-    try {
-      await api.tasks.create(title, description, capacity)
-      setTitle('')
-      setDescription('')
-      setCapacity(3)
-      setMsg('สร้างงานสำเร็จ')
-      await load()
-    } catch (e: any) {
-      setMsg(e.message || 'create task failed')
-    }
-  }
-
   return (
     <div className="container">
-      <div className="topbar">
-        <div>
-          <div style={{ fontSize: 20, fontWeight: 800 }}>Assign Work</div>
-          <div className="muted">เลือกลงทะเบียนงานได้ และดูคนที่ลงทะเบียน</div>
-        </div>
-        <div className="badge">{user.email} • {user.role}</div>
-      </div>
-
-      {msg && <div className={msg.includes('สำเร็จ') ? 'success' : 'error'} style={{ marginBottom: 12 }}>{msg}</div>}
-      {error && <div className="error" style={{ marginBottom: 12 }}>{error}</div>}
-
-      {isAdmin && (
-        <div className="card" style={{ marginBottom: 14 }}>
-          <h3 style={{ marginTop: 0 }}>Admin: Create Task</h3>
-          <div className="row">
-            <div>
-              <label>Title</label>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="เช่น งานช่วยจัดของ" />
-            </div>
-            <div>
-              <label>Capacity</label>
-              <input type="number" value={capacity} onChange={(e) => setCapacity(Number(e.target.value))} min={1} />
-            </div>
-          </div>
-          <div style={{ marginTop: 12 }}>
-            <label>Description</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="รายละเอียดงาน (optional)" rows={3} />
-          </div>
-          <div style={{ marginTop: 12 }}>
-            <button onClick={createTask} disabled={!title.trim()}>Create</button>
-          </div>
-        </div>
-      )}
 
       <div className="card" style={{ marginBottom: 14 }}>
         <div className="row" style={{ alignItems: 'end' }}>
@@ -126,7 +79,7 @@ export default function Dashboard({ user }: { user: User }) {
       <div className="tasks">
         {tasks.map((t) => {
           const isMine = myTaskIds.has(t.id)
-          const full = t.remaining <= 0
+          const full = t.remaining <= 0 || user.role === 'admin'
           return (
             <div className="card" key={t.id}>
               <p className="taskTitle">{t.title}</p>

@@ -59,6 +59,8 @@ export const api = {
       request<{ ok: boolean }>(`/api/tasks/${id}/register`, { method: 'POST' }),
     unregister: (id: string) =>
       request<{ ok: boolean }>(`/api/tasks/${id}/unregister`, { method: 'POST' }),
+    adminRemove: (taskId: string, userId: string) =>
+      request<{ ok: boolean }>(`/api/tasks/${taskId}/remove/${userId}`, { method: 'POST' }),
   },
 }
 

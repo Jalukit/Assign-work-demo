@@ -27,3 +27,26 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 .hr { height: 1px; background: rgba(255,255,255,0.12); margin: 14px 0; }
 .error { color: #ffb4b4; }
 .success { color: #b4ffcc; }
+.logo { font-size: 20px; font-weight: 700; }
+
+/* Layout with Sidebar */
+.app-layout { display: flex; min-height: 100vh; }
+.sidebar { 
+  width: 220px; 
+  background: rgba(255,255,255,0.04); 
+  border-right: 1px solid rgba(255,255,255,0.12); 
+  padding: 20px; 
+  flex-shrink: 0;
+}
+.sidebar h2 { margin: 0 0 16px; font-size: 18px; }
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li { margin-bottom: 8px; }
+.sidebar a { 
+  display: block; 
+  padding: 10px 12px; 
+  border-radius: 8px; 
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.sidebar a:hover { background: rgba(255,255,255,0.08); }
+.main-content { flex: 1; }
