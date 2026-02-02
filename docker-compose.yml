@@ -1,0 +1,39 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: assignwork-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    image: golang:1.22
+    container_name: assignwork-backend
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8080:8080"
+    command: sh -c "go mod tidy && go run main.go"
+    depends_on:
+      - mongo
+
+  frontend:
+    image: node:20
+    container_name: assignwork-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE=http://localhost:8080
+    command: sh -c "npm i && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
